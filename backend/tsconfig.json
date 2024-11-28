@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs", // Node.js använder CommonJS-moduler
+    "rootDir": "./", // Rotmappen för TypeScript-filer
+    "outDir": "./dist", // Plats för genererade JavaScript-filer
+    "strict": true, // Aktiverar strikt typkontroll
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true // Snabbar upp byggprocessen genom att ignorera typkontroll i biblioteksfiler
+  },
+  "include": ["./**/*.ts"], // Inkluderar alla .ts-filer i projektet
+  "exclude": ["node_modules"]
+}
