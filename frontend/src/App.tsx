@@ -68,6 +68,9 @@ function App() {
 
   return (
     <div className="flex flex-col items-center p-4 bg-gray-100 min-h-screen">
+      <h1 className="text-3xl font-bold underline text-yellow-400">
+        Hello world!
+      </h1>
       <div className="flex justify-center space-x-4 mt-12">
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="w-12 h-12" alt="Vite logo" />
@@ -80,7 +83,7 @@ function App() {
         Uppgiftshanteraren
       </h1>
 
-      <div className="my-4">
+      <div className="my-4 ml-20">
         <input
           type="text"
           className="border rounded p-2"

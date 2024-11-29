@@ -1,28 +1,19 @@
-# React + TypeScript + Vite
+# Cypress-Uppgiftshanteraren
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+En enkel fullstack-applikation för att hantera uppgifter, byggd med Express, React/TypeScript, TailwindCSS och PostgreSQL.
 
-Currently, two official plugins are available:
+## Installation och Användning
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Klona repot.
+2. Installera beroenden för både backend och frontend:
+   cd backend / npm install
+   cd frontend / npm install
 
-## Expanding the ESLint configuration
+3. Skapa .env fil i backend mappen, skapa en databasanslutningssträng där. PostgreSQL exempel: PGURI=postgres://username:password@localhost:5432/database-name
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+4. Starta backend och frontend för utveckling:
+   cd backend
+   npm run build-frontend
+   node index.js
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
-# cypress
+5. Gå till http://localhost:3000 för att se applikationen
