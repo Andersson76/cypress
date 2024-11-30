@@ -11,9 +11,13 @@ En enkel fullstack-applikation för att hantera uppgifter, byggd med Express, Re
 
 3. Skapa .env fil i backend mappen, skapa en databasanslutningssträng där. PostgreSQL exempel: PGURI=postgres://username:password@localhost:5432/database-name
 
-4. Starta backend och frontend för utveckling:
+4. Kör kommandot i frontend, för att generera Tailwind CSS:
+   npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
+
+5. Starta backend och frontend för utveckling:
    cd backend
    npm run build-frontend
-   node index.js
+   npx ts-node index.ts
 
-5. Gå till http://localhost:3000 för att se applikationen
+6. Gå till http://localhost:3000 för att se applikationen
+

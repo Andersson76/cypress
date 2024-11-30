@@ -6,6 +6,7 @@ import TaskItem from "./components/TaskItem";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import "./index.css";
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -68,9 +69,6 @@ function App() {
 
   return (
     <div className="flex flex-col items-center p-4 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold underline text-yellow-400">
-        Hello world!
-      </h1>
       <div className="flex justify-center space-x-4 mt-12">
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="w-12 h-12" alt="Vite logo" />
