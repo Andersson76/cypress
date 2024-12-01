@@ -1,0 +1,4 @@
+[
+  { "id": 1, "title": "Mock Task 1", "status": "pending" },
+  { "id": 2, "title": "Mock Task 2", "status": "completed" }
+]

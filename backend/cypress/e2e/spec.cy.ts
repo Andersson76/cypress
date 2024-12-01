@@ -15,6 +15,5 @@ describe("Create task E2E Test", () => {
 
     //Verifiera att en POST request skickades för att skapa uppgiften
     cy.intercept("POST", "http://localhost:3000/api/tasks").as("createTask");
-    //cy.wait("@createTask").its("response.statusCode").should("eq", 201);
   });
 });

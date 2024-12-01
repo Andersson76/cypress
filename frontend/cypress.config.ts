@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { defineConfig } from "cypress";
 
 export default defineConfig({
   e2e: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    baseUrl: "http://localhost:3000",
     setupNodeEvents(_on, _config) {
       // implement node event listeners here
     },

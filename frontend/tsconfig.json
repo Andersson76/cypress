@@ -20,7 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "**/*.ts", "**.tsx"],
+  "include": ["src", "**/*.ts", "**.tsx", "cypress/component/mock-api.cy.tsx"],
   "exclude": ["vite.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
