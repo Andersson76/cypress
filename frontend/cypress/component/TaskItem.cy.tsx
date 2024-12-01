@@ -1,8 +1,7 @@
-/// <reference types="cypress" />
 import React from "react";
-import { mount } from "cypress/react"; // För att mounta komponenten
-import TaskItem from "../../src/components/TaskItem"; // Importera din komponent
-import { Task } from "../../interfaces/task"; // Importera interfacet
+import { mount } from "cypress/react";
+import TaskItem from "../../src/components/TaskItem";
+import { Task } from "../../interfaces/task";
 
 describe("TaskItem Component", () => {
   const mockTask: Task = {
@@ -15,11 +14,10 @@ describe("TaskItem Component", () => {
   let mockOnDelete: Cypress.Agent<sinon.SinonSpy>;
 
   beforeEach(() => {
-    // Initiera spionerna i beforeEach
     mockOnToggleStatus = cy.spy().as("onToggleStatus");
     mockOnDelete = cy.spy().as("onDelete");
+    cy.intercept("GET", "/api/tasks", { fixture: "tasks.json" }).as("getTasks");
 
-    // Mounta komponenten
     mount(
       <TaskItem
         task={mockTask}
@@ -30,9 +28,9 @@ describe("TaskItem Component", () => {
   });
 
   it("renders task details correctly", () => {
-    cy.contains("Test Task").should("be.visible"); // Kontrollera uppgiftstitel
-    cy.contains("Status: pending").should("be.visible"); // Kontrollera status
-    cy.get("button").contains("Mark as Done").should("be.visible"); // Kontrollera knappen
+    cy.contains("Test Task").should("be.visible");
+    cy.contains("Status: pending").should("be.visible");
+    cy.get("button").contains("Mark as Done").should("be.visible");
   });
 
   it("calls onToggleStatus when Mark as Done button is clicked", () => {
