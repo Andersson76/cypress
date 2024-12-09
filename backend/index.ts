@@ -3,7 +3,6 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import path from "path";
 import { Client } from "pg";
-import process from "process";
 
 dotenv.config();
 
@@ -19,51 +18,79 @@ client.connect().catch((error) => {
   console.error("Failed to connect to the database:", error);
 });
 
-//Hämta alla uppgifter
-app.get("/api/tasks", async (_request, response) => {
-  const { rows } = await client.query("SELECT * FROM tasks");
-  response.send(rows);
-});
-
-// Skapa en ny uppgift
-app.post("/api/tasks", async (request, response) => {
-  const { title, status } = request.body;
-  const result = await client.query(
-    "INSERT INTO tasks (title, status) VALUES ($1, $2) RETURNING *",
-    [title, status]
-  );
-  response.status(201).send(result.rows[0]);
-});
-
-// Uppdatera en uppgift
-app.put("/api/tasks/:id", async (request, response) => {
-  console.log("Received PUT request for task ID:", request.params.id); // Lägg till denna rad
-  const { id } = request.params;
-  const { title, status } = request.body;
-
+app.get("/api/tasks", async (req, res) => {
   try {
-    const result = await client.query(
-      "UPDATE tasks SET title = $1, status = $2 WHERE id = $3 RETURNING *",
-      [title || "", status, id]
-    );
-    response.send(result.rows[0]);
+    const { rows } = await client.query("SELECT * FROM tasks");
+    res.send({ success: true, tasks: rows });
   } catch (error) {
-    console.error("Error updating task:", error);
-    response.status(500).send({ error: "Internal server error" });
+    console.error("Error fetching tasks:", error);
+    res
+      .status(500)
+      .send({ success: false, message: "Failed to fetch tasks from database" });
   }
 });
 
-// Ta bort en uppgift
-app.delete("/api/tasks/:id", async (request, response) => {
-  const { id } = request.params;
-  await client.query("DELETE FROM tasks WHERE id = $1", [id]);
-  response.send({ message: "Task deleted" });
+app.post("/api/tasks", async (req, res) => {
+  const { title, status } = req.body;
+  try {
+    const result = await client.query(
+      "INSERT INTO tasks (title, status) VALUES ($1, $2) RETURNING *",
+      [title, status]
+    );
+    res.status(201).send(result.rows[0]);
+  } catch (error) {
+    console.error("Error creating task:", error);
+    res
+      .status(500)
+      .send({ success: false, message: "Failed to post to database" });
+  }
+});
+
+app.put("/api/tasks/:id", async (req, res) => {
+  const { id } = req.params;
+  const { title, status } = req.body;
+  try {
+    const { rows: existingRows } = await client.query(
+      "SELECT * FROM tasks WHERE id = $1",
+      [id]
+    );
+    const existingTask = existingRows[0];
+
+    const updatedTitle = title !== undefined ? title : existingTask.title;
+    const updatedStatus = status !== undefined ? status : existingTask.status;
+
+    const { rows } = await client.query(
+      "UPDATE tasks SET title = $1, status = $2 WHERE id = $3 RETURNING *",
+      [updatedTitle, updatedStatus, id]
+    );
+
+    res.send(rows[0]);
+  } catch (error) {
+    console.error("Error updating task:", error);
+    res.status(500).send({
+      success: false,
+      message: "Failed to making changes in the database",
+    });
+  }
+});
+
+app.delete("/api/tasks/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await client.query("DELETE FROM tasks WHERE id = $1", [id]);
+
+    res.send({ success: true, message: "Task deleted" });
+  } catch (error) {
+    console.error("Error deleting task:", error);
+    res
+      .status(500)
+      .send({ success: false, message: "Failed to delete in database" });
+  }
 });
 
 app.use(express.static(path.join(__dirname, "dist")));
 
-// Fallback för alla andra rutter
-app.get("*", (_req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
