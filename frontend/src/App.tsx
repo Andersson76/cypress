@@ -7,6 +7,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import "./index.css";
+import "./input.css";
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
