@@ -12,9 +12,8 @@ describe("Full E2E Test", () => {
 
     cy.request("GET", "/api/tasks").then((response) => {
       expect(response.status).to.eq(200);
-      cy.log(JSON.stringify(response.body));
 
-      const taskExists = response.body.some(
+      const taskExists = response.body.tasks.some(
         (task: { title: string }) => task.title === taskTitle
       );
       expect(taskExists).to.be.true;
